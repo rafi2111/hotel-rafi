@@ -10,7 +10,7 @@ public function __construct()
     public function index()
     {
         $data=[
-            'title' =>'Hotel-Ku | Master Data',
+            'title' =>'Hotel Zafeer | Master Data',
             'judul' =>'Master Data',
             'subjudul' =>'Fasilitas Kamar',
             'breadcrumb1' =>'Master Data',
@@ -26,7 +26,7 @@ public function __construct()
         
         if($this->form_validation->run() == false) {
             $data=[
-                'title' =>'Hotel-Ku | Master Data',
+                'title' =>'Hotel Zafeer | Master Data',
                 'judul' =>'Master Data',
                 'subjudul' =>'Tambah Fasilitas Kamar',
                 'breadcrumb1' =>'Tambah Fasilitas Kamar',
@@ -53,7 +53,7 @@ public function __construct()
         if($this->form_validation->run() == FALSE)
         {
             $data=[
-                'title' =>'Hotel-Ku | Master Data',
+                'title' =>'Hotel Zafeer | Master Data',
                 'judul' =>'Master Data',
                 'subjudul' =>'Tambah Fasilitas Kamar',
                 'breadcrumb1' =>'Tambah Fasilitas Kamar',

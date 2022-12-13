@@ -11,7 +11,7 @@ class TipeKamar extends CI_Controller
     public function index()
     {
         $data=[
-            'title' =>'Hotel-Ku | Master Kamar',
+            'title' =>'Hotel Zafeer | Master Kamar',
             'judul' =>'Master Kamar',
             'subjudul' =>'Tipe Kamar',
             'breadcrumb1' =>'Master Kamar',
@@ -26,7 +26,7 @@ class TipeKamar extends CI_Controller
         
         if($this->form_validation->run() == false) {
             $data=[
-                'title' =>'Hotel-Ku | Master Kamar',
+                'title' =>'Hotel Zafeer | Master Kamar',
                 'judul' =>'Master Kamar',
                 'subjudul' =>'Tambah Tipe Kamar',
                 'breadcrumb1' =>'Tambah Tipe Kamar',

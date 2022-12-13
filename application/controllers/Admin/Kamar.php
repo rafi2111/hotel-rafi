@@ -11,7 +11,7 @@ class Kamar extends CI_Controller
     public function index()
     {
         $data=[
-            'title' =>'Hotel-Ku | Master Data',
+            'title' =>'Hotel Zafeer | Master Data',
             'judul' =>'Master Data',
             'subjudul' =>'Kamar Hotel ',
             'breadcrumb1' =>'Master Data',
@@ -32,7 +32,7 @@ class Kamar extends CI_Controller
         
         if($this->form_validation->run() == false) {
             $data=[
-                'title' =>'Hotel-Ku | Master Kamar',
+                'title' =>'Hotel Zafeeer | Master Kamar',
                 'judul' =>'Master Kamar',
                 'subjudul' =>'Tambah Tipe Kamar',
                 'breadcrumb1' =>'Tambah Tipe Kamar',

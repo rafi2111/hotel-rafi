@@ -2,103 +2,61 @@
 
 class Fasilitashotel extends CI_Controller
 {
-public function __construct()
-{
-    parent::__construct();
-    $this->load->model('Mod_fasilitashotel','MFH');
-}
+    
+    public function __construct()
+    {
+        parent::__construct();
+        $this->load->model('Mod_fasilitashotel','MFH');
+    }
+
     public function index()
     {
         $data=[
-            'title' =>'Hotel-Ku | Master Data',
+            'title' =>'Hotel Zafeer | Master Data',
             'judul' =>'Master Data',
-            'subjudul' =>'Fasilitas Kamar',
+            'subjudul' =>'Fasilitas hotel',
             'breadcrumb1' =>'Master Data',
-            'datafasilitashotel' => $this->MFH->AmbilHotel()->result()
+            'datafasilitashotel' => $this->MFH->Ambil(['jenisfasilitas'=>'Hotel'])->result()
         ];
         $this->template->load('Admin/Template','Admin/Fasilitashotel/index', $data);
     }
-
     public function Add()
     {
-            $this->form_validation->set_rules('namafasilitas','Nama Fasilitas','required');
-            $this->form_validation->set_message('required','(field) tidak boleh kosong.!');
-        if ( $this->form_validation->run() == FALSE) {
-            $data = [
-                'title' =>'Hotel-Ku | Master Data',
-                'judul' =>'Master Data',
-                'subjudul' =>'TambahFasilitas Hotel',
-                'breadcrumb1' =>'Master Data',
-                'id' =>'$id'
-      
-            ];
-            $this->template->load('Admin/Template', 'Admin/Fasilitashotel/Add',$data);
-        }else{
-            $acak=rand(1000,999);
-            $foto=$acak . '-IMG-Picture.jpg';
-            $config['upload_path']          ='./upload';
-            $config['allowed_types']         ='jpg';
-            $config['max_size']             =1024;
-            $config['file_name']            =$foto;
-            $this->load->library('upload',$config);
-
-        if(!$this->upload->do_upload('galery')){
-                $this->session->set_flashdata('pesan','<div class="alert alert-danger">Data gagal diupload.!</div>');
-            redirect('Admin/Fasilitashotel','refresh');
-        }else{
+        $this->form_validation->set_rules('namafasilitas', 'Nama Fasilitas', 'required');
+        $this->form_validation->set_message('required', '{field} tidak boleh kosong');
+        if ($this->form_validation->run() == false) {
             $data=[
-                'namafasilitas'         =>$this->input->post('namafasilitas'),
-                'picture'               =>$foto,
-                'jenisfasilitas'        =>'Hotel'
+                'title' =>'Hotel Zafeer | Master Data',
+                'judul' =>'Master Data',
+                'subjudul' =>'Tambah Fasilitas hotel',
+                'breadcrumb1' =>'Master Data',
+                'datafasilitashotel'  => $this->MFH->AmbilAll()->result()
             ];
-            $this->MFH->simpan($data);
-            $this->session->set_flashdata('pesan','<div class="alert alert-success">Data berhasil disimpan.!</div>');
-            redirect('Admin/Fasilitashotel','refresh');
-        }
-    }
-}
-
-    public function Ubah($id = null) 
-    {
-            $this->form_validation->set_rules('namafasilitas','Nama Fasilitas','required');
-            $this->form_validation->set_message('required','(field) tidak boleh kosong.!');
-            if ( $this->form_validation->run() == FALSE) {
-                $data = [
-                    'title' =>'Hotel-Ku | Master Data',
-                    'judul' =>'Master Data',
-                    'subjudul' =>'TambahFasilitas Hotel',
-                    'breadcrumb1' =>'Master Data',
-                    'id' =>$id,
-                    'dataubahfasilitas' =>$this->MFH->Ambil(['idfasilitas'=>$id])->result()
-                ];
-                $this->template->load('Admin/Template', 'Admin/Fasilitashotel/ubah', $data);
+            $this->template->load('Admin/Template','Admin/Fasilitashotel/Add', $data);
+        } else {
+            $acak=rand(1000,9999);
+            $foto=$acak.'IMG-Picture.jpg';
+            $config['upload_path']      = './upload';
+            $config['allowed_types']     = 'jpg';
+            $config['max_size']         = 1024;
+            $config['file_name']        = $foto;
+            $this->load->library('upload', $config);
+            if (!$this->upload->do_upload('galery')) {
+                $this->session->set_flashdata('pesan', '<div class="alert alert-danger">Data gagal diupload!' . $this->upload->display_errors() . '</div>');
+                redirect('Admin/Fasilitashotel', 'refresh');
             }else{
-                $acak=rand(1000,999);
-                $foto=$acak . '-IMG-Picture.jpg';
-                $config['upload_path']          ='./upload';
-                $config['allowed_types']         ='jpg';
-                $config['max_size']             =1024;
-                $config['file_name']            =$foto;
-                $this->load->library('upload',$config);
-    
-            if(!$this->upload->do_upload('galery')){
-                //jika di ubah tanpa gambar//
-                $dataubahtanpagambar=[
-                    'namafasilitas'
-                ];
-                $this->MFH->Ubah($dataubahtanpagambar,['idfasilitas'=> $id]);
-                $this->session->set_flashdata('pesan','<div class="alert alert-success">Data berhasil diperbaharui.!</div>');
-                redirect('Admin/Fasilitashotel','refresh');
-            }else{
-                //jika di ubah dengan gambar//
                 $data=[
-                    'namafasilitas'         =>$this->input->post('namafasilitas'),
-                    'picture'               =>$foto,
+                    'namafasilitas'       => $this->input->post('namafasilitas'),
+                    'picture'             => $foto,
+                    'jenisfasilitas'      => 'Hotel'
                 ];
-                $this->MFH->ubah($data, ['idfasilitas' => $id]);
-                $this->session->set_flashdata('pesan','<div class="alert alert-success">Data berhasil diperbaharui.!</div>');
-                redirect('Admin/Fasilitashotel','refresh');
+                $this->MFH->Simpan($data);
+                $this->session->set_flashdata('pesan', '<div class="alert alert-success">Data berhasil di simpan.!</div>');
+                redirect('Admin/Fasilitashotel', 'refresh');
             }
         }
     }
 }
+
+
+    
